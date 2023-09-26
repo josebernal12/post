@@ -14,6 +14,10 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  rol: {
+    type: DataTypes.ENUM('admin', 'empleado'),
+    defaultValue: 'empleado'
   }
 }, {
   timestamps: true
