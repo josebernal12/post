@@ -11,24 +11,29 @@ export const validField = (name: string | null, email: string | null, password: 
   if (name === undefined) {
     return {
       isNull: true,
-      message: 'name is required'
+      message: 'name is required',
+      status: 404
     }
   }
   else if (email === undefined) {
     return {
       isNull: true,
-      message: 'email is required'
+      message: 'email is required',
+      status: 404
     }
   }
   else if (password === undefined) {
     return {
       isNull: true,
-      message: 'password is required'
+      message: 'password is required',
+      status: 404
     }
   }
   else {
     return {
-      isNull: false
+      isNull: false,
+      message: 'todo correcto',
+      status: 200
     }
   }
 }
