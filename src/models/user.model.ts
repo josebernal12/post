@@ -1,8 +1,20 @@
-import { DataTypes } from 'sequelize'
+import { Model, InferAttributes, InferCreationAttributes, DataTypes } from "sequelize";
 import sequelize from '../database/database'
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  declare id? : string
+  declare name: string
+  declare email: string
+  declare password: string
+  declare rol?: string
 
-const User = sequelize.define('User', {
 
+}
+User.init({
+  id: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    autoIncrement: true,
+    primaryKey: true
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false
@@ -18,9 +30,12 @@ const User = sequelize.define('User', {
   rol: {
     type: DataTypes.ENUM('admin', 'empleado'),
     defaultValue: 'empleado'
-  }
-}, {
-  timestamps: true
-})
+  },
 
+},
+  {
+    sequelize,
+    tableName: 'users'
+  }
+)
 export default User
