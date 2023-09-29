@@ -9,8 +9,7 @@ app.use(express.json())
 app.use('/api/user', userRouter)
 
 
-app.listen(port, () => {
-  console.log(`server listening port to ${port}`)
-  sequelize.authenticate()
-})
-
+app.listen(port)
+console.log(`server listening to port ${port}`)
+sequelize.authenticate()
+export default app
