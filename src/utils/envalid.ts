@@ -6,7 +6,12 @@ const env = cleanEnv(process.env, {
   MYSQLNAME: str(),
   MYSQLUSERNAME: str(),
   MYSQLPASSWORD: str(),
-  PRIVATEKEY: str()
+  PRIVATEKEY: str(),
+  NAMETEST: str(),
+  EMAILTEST: str(),
+  PASSWORDTEST: str(),
+  EMAILTESTDONTEXIST: str(),
+  PASSWORDTESTDONTEXIST: str(),
 })
 
 export default env
