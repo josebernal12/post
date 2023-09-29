@@ -6,7 +6,7 @@ class UserController {
     const { name, email, password }: IUser = req.body
     const response = await UserServices.register(name, email, password)
 
-    res.json({
+    res.status(response.status).json({
       error: response.error,
       message: response.message,
       data: response.data,
@@ -17,7 +17,7 @@ class UserController {
   static async login(req: Request, res: Response) {
     const { email, password }: IUser = req.body
     const response = await UserServices.login(email, password)
-    res.json({
+    res.status(response.status).json({
       error: response.error,
       message: response.message,
       data: {
