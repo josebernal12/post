@@ -87,7 +87,7 @@ class UserServices {
         message: 'login hecho satisfactoriamente',
         data: user,
         token,
-        status: 404
+        status: 200
       }
     } catch (error) {
       return {
