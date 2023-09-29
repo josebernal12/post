@@ -1,5 +1,4 @@
 import { IResponseApi } from "../interfaces/response.interfaces";
-import { IUser } from "../interfaces/user.interfaces";
 import User from "../models/user.model";
 import { CreateJsonWebToken } from "../utils/jwt";
 import { validFieldLogin } from "../utils/validLogin";
@@ -22,7 +21,7 @@ class UserServices {
         return {
           error: true,
           message: 'email ya existe',
-          status: 500
+          status: 404
         }
       }
       const passwordHash = await bcrypt.hash(password, 10)
@@ -30,15 +29,15 @@ class UserServices {
       if (user) {
         return {
           error: true,
-          message: 'user registrado satisfactoriamente',
+          message: 'usuario registrado satisfactoriamente',
           data: user,
-          status: 500
+          status: 200
         }
       }
       return {
         error: true,
         message: 'usuario no existe',
-        status: 500
+        status: 404
       }
     } catch (error) {
       return {
