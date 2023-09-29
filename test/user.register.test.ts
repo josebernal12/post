@@ -1,6 +1,7 @@
 import request from 'supertest'
 import { faker } from '@faker-js/faker'
 import app from '../src/server'
+import env from '../src/utils/envalid'
 describe('registro de un usuario', () => {
   it('un usuario se registrara satisfactoriamente', (done) => {
 
@@ -19,8 +20,8 @@ describe('registro de un usuario', () => {
   })
   it('un usuario no envio todos los campos necesario', (done) => {
     const userData = {
-      email: "antonio212@hotmail.com",
-      password: "1234"
+      email: env.EMAILTEST,
+      password: env.PASSWORDTEST
     }
     request(app)
       .post('/api/user/register')
@@ -32,9 +33,9 @@ describe('registro de un usuario', () => {
 
   it('el email ya esta en la base de datos', (done) => {
     const userData = {
-      name: "antonio",
-      email: "antonio@hotmail.com",
-      password: "1234"
+      name: env.NAMETEST,
+      email: env.EMAILTEST,
+      password: env.PASSWORDTEST
     }
 
     request(app)
