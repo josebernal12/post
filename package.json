@@ -7,7 +7,7 @@
     "start": "node build/src/server.js",
     "build": "tsc",
     "dev": "nodemon src/server.ts",
-    "test": "mocha --require ts-node/register test/user.register.test.ts --exit"
+    "test": "mocha --require ts-node/register test/** --exit"
   },
   "keywords": [],
   "author": "",
