@@ -1,4 +1,4 @@
-export const validFieldLogin = (email: string | undefined, password: string | undefined) => {
+export const validFieldLogin = (email: string , password: string | undefined) => {
 
   if (email === undefined) {
     return {
@@ -14,7 +14,8 @@ export const validFieldLogin = (email: string | undefined, password: string | un
   }
   else {
     return {
-      isNull: false
+      isNull: false,
+      message: 'all correct'
     }
   }
 }
