@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import { IUser } from '../interfaces/user.interfaces';
+import { IUser } from '../interfaces/data.interfaces';
 import UserServices from "../services/user.services";
 class UserController {
   static async create(req: Request, res: Response) {
     const { name, email, password }: IUser = req.body
     const response = await UserServices.register(name, email, password)
-
     res.status(response.status).json({
       error: response.error,
       message: response.message,

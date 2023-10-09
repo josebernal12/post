@@ -1,100 +1,53 @@
 import { IResponseApi } from "../interfaces/response.interfaces";
 import User from "../models/user.model";
+import { handleResponse } from '../utils/handle';
 import { CreateJsonWebToken } from "../utils/jwt";
 import { validFieldLogin } from "../utils/validLogin";
 import { existEmail, validField } from "../utils/validRegister";
 import bcrypt from 'bcrypt'
 class UserServices {
-
-
   static async register(name: string, email: string, password: string): Promise<IResponseApi> {
     try {
       const isValid = validField(name, email, password)
       if (isValid.isNull) {
-        return {
-          error: isValid.isNull,
-          message: isValid.message,
-          status: isValid.status
-        }
+        return handleResponse(isValid.isNull, isValid.message, isValid.status)
       }
       if (await existEmail(email)) {
-        return {
-          error: true,
-          message: 'email ya existe',
-          status: 404
-        }
+        return handleResponse(true, 'email ya existe', 404)
       }
       const passwordHash = await bcrypt.hash(password, 10)
       const user = await User.create({ name, email, password: passwordHash })
       if (user) {
-        return {
-          error: true,
-          message: 'usuario registrado satisfactoriamente',
-          data: user,
-          status: 200
-        }
+        return handleResponse(false, 'usuario registrado satisfactoriamente', 200, user)
       }
-      return {
-        error: true,
-        message: 'usuario no existe',
-        status: 404
-      }
+      return handleResponse(true, 'usuario no existe', 404)
     } catch (error) {
-      return {
-        error: true,
-        message: JSON.stringify(error),
-        status: 500
-      }
+      return handleResponse(true, JSON.stringify(error), 500)
     }
   }
 
   static async login(email: string, password: string): Promise<IResponseApi> {
     try {
-
       const valid = validFieldLogin(email, password)
       if (valid.isNull) {
-        return {
-          error: valid.isNull,
-          message: valid.message,
-          status: 404
-        }
+        return handleResponse(valid.isNull, valid.message, 404)
       }
-
       const user = await User.findOne({ where: { email } })
 
       if (!user) {
-        return {
-          error: true,
-          message: 'email no existe en la base de datos',
-          status: 404
-        }
+        return handleResponse(true, 'email no existe en la base de datos', 404)
       }
 
       const passwordHash = user.getDataValue('password')
       const isValidPassword = await bcrypt.compare(password, passwordHash)
       if (!isValidPassword) {
-        return {
-          error: true,
-          message: 'password incorrecto',
-          status: 404
-        }
+        return handleResponse(true, 'password incorrecto', 404)
       }
-
       const id = user.getDataValue('id')
       const token = CreateJsonWebToken(id)
-      return {
-        error: false,
-        message: 'login hecho satisfactoriamente',
-        data: user,
-        token,
-        status: 200
-      }
+      return handleResponse(false, 'login hecho satisfactoriamente', 200, user, token)
     } catch (error) {
-      return {
-        error: true,
-        message: JSON.stringify(error),
-        status: 500
-      }
+      return handleResponse(true, JSON.stringify(error), 500)
     }
   }
 }
